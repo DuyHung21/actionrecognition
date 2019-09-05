@@ -15,10 +15,10 @@ if __name__ == "__main__":
     frame_per_clip = args.nf
 
     print("Counting number of frames in each video")
-    # dataset_dir = args.d
-    # if dataset_dir.endswith('/'):
-    #     dataset_dir = dataset_dir[:-1]
-    # subprocess.call(['./count_frame.sh', dataset_dir, 'temp.json'])
+    dataset_dir = args.d
+    if dataset_dir.endswith('/'):
+        dataset_dir = dataset_dir[:-1]
+    subprocess.call(['./count_frame.sh', dataset_dir, 'temp.json'])
     print("Done")
     
     print("Generating text files")
