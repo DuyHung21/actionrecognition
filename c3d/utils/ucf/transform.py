@@ -13,19 +13,19 @@ class Rescale(object):
             to output_size keeping aspect ratio the same.
     """
 
-    def __init__(self, frame_size):
-        assert isinstance(frame_size, (int, tuple))
-        self.frame_size = frame_size
+    def __init__(self, output_size):
+        assert isinstance(output_size, (int, tuple))
+        self.output_size = output_size
 
     def __call__(self, clip): 
         n, h, w = clip.shape[:3]
-        if isinstance(self.frame_size, int):
+        if isinstance(self.output_size, int):
             if h > w:
-                new_h, new_w = self.frame_size * h / w, self.frame_size
+                new_h, new_w = self.output_size * h / w, self.output_size
             else:
-                new_h, new_w = self.frame_size, self.frame_size * w / h
+                new_h, new_w = self.output_size, self.output_size * w / h
         else:
-            new_h, new_w = self.frame_size
+            new_h, new_w = self.output_size
 
         new_h, new_w = int(new_h), int(new_w)
         
@@ -38,6 +38,11 @@ class Rescale(object):
 
 class CenterCrop(object):
     """Center crop a clip to the desired shape
+
+    Args:
+        output_size (tuple or int): Desired output size. If tuple, output is
+            matched to output_size. If int, smaller of image edges is matched
+            to output_size keeping aspect ratio the same.
     """
 
     def __init__(self, output_size):
@@ -126,8 +131,8 @@ class RandomHorizontalFlip(object):
 
 
 class ToTensor(object):
-    """Transform a clip with shape (n - h - w - c) to
-    a corresponding tensor with shape (c - n - h - w)
+    """Transform a clip with shape (n - h - w - c) to a 
+        corresponding tensor with shape (c - n - h - w)
     """
 
     def __call__(self, clip):
@@ -137,7 +142,7 @@ class ToTensor(object):
     
 class ToTest(object):
     """Transform a clip with shape (n - h - w - c) to
-    a corresponding tensor with shape (1 - c - n - h - w)
+        a corresponding tensor with shape (1 - c - n - h - w)
     """
 
     def __call__(self, clip):
